@@ -1,0 +1,39 @@
+const { addonBuilder } = require('stremio-addon-sdk');
+
+const manifest = {
+    id: 'org.yourname.testaddon',
+    version: '1.0.0',
+    name: 'Test Addon',
+    description: 'Addon testowy z trzema źródłami odcinka',
+    resources: ['stream', 'meta'],
+    types: ['series'],
+    catalogs: [] // musi być tablica, nawet pusta
+};
+
+const builder = new addonBuilder(manifest);
+
+builder.defineStreamHandler(async (args) => {
+    // args.id to ID w formacie "serial:season:episode" np. "ThePirateBay:1:1"
+    if (args.id === 'ThePirateBay:1:1') {
+        return {
+            streams: [
+                {
+                    title: 'Voe.sx',
+                    url: 'https://cdn-qr0aegqhvu9n9dym.orbitcache.com/engine/hls2/01/12703/5d9yp500urfo_,n,.urlset/index-v1-a1.m3u8?t=tpO7nRuDn9tpep3ubEmgeRNKRKqXzUgwCgmnl-eHUYQ&s=1755363620&e=14400&f=63515416&node=h9P2Oo5Af+bLaV1vM12dFB/6EqYhkHdfYLONXMTHzxQ=&i=83.26&sp=2500&asn=5617&q=n&rq=BRqb5dkDmqRpN4zU68CFppTedt4MoEy5ZS3DFb5E'
+                },
+                {
+                    title: 'VidFast',
+                    url: 'https://tgtria1dbw.xyz/file2/NvUhe7DDlHC60Gn1LsWPxQ1lZKKPip8SKpMbEJT9AOATBYTgOa3TV7Vo1qNnkZdGRpIEhIRBvxRazBnELlulqmHvkJoa1o3gOwMm3ITS+x09E8wnKO953w04rcaua4kyylKUGZj+qXyg5mQSd99s+g7POgDokoVYzJzagFt4Z7M=/MTA4MA==/aW5kZXgubTN1OA==.m3u8'
+                },
+                {
+                    title: 'MappleTV',
+                    url: 'https://tgtria1dbw.xyz/file2/NvUhe7DDlHC60Gn1LsWPxQ1lZKKPip8SKpMbEJT9AOATBYTgOa3TV7Vo1qNnkZdGRpIEhIRBvxRazBnELlulqmHvkJoa1o3gOwMm3ITS+x09E8wnKO953w04rcaua4kyylKUGZj+qXyg5mQSd99s+g7POgDokoVYzJzagFt4Z7M=/MTA4MA==/aW5kZXgubTN1OA==.m3u8'
+                }
+            ]
+        };
+    }
+
+    return { streams: [] };
+});
+
+module.exports = builder.getInterface();
